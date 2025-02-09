@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Döviz Çevirici</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #c3ec52, #0ba29d);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        .container {
+            background: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+        }
+        h1 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        select, input, button {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #0ba29d;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        button:hover {
+            background-color: #087f75;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        .history {
+            margin-top: 20px;
+            text-align: left;
+            font-size: 0.9em;
+        }
+        .history h3 {
+            font-size: 1em;
+            margin-bottom: 10px;
+        }
+        .history p {
+            background: #f7f7f7;
+            padding: 5px;
+            border-radius: 5px;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Döviz Çevirici</h1>
+        <select id="fromCurrency">
+            <option value="USD">USD - Amerikan Doları</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="TRY">TRY - Türk Lirası</option>
+            <option value="GBP">GBP - İngiliz Sterlini</option>
+        </select>
+        <input type="number" id="amount" placeholder="Miktarı Girin">
+        <select id="toCurrency">
+            <option value="USD">USD - Amerikan Doları</option>
+            <option value="EUR">EUR - Euro</option>
+            <option value="TRY">TRY - Türk Lirası</option>
+            <option value="GBP">GBP - İngiliz Sterlini</option>
+        </select>
+        <button onclick="convertCurrency()">Çevir</button>
+        <div class="result" id="result"></div>
+        <div class="history" id="history">
+            <h3>Hesaplama Geçmişi</h3>
+        </div>
+    </div>
+    <script>
+        let history = [];
+
+        function convertCurrency() {
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toCurrency = document.getElementById('toCurrency').value;
+            const amount = parseFloat(document.getElementById('amount').value);
+
+            if (isNaN(amount) || amount <= 0) {
+                document.getElementById('result').innerText = 'Lütfen geçerli bir miktar girin.';
+                return;
+            }
+
+            // Döviz kuru simülasyonu
+            const exchangeRates = {
+                'USD': { 'TRY': 27, 'EUR': 0.91, 'GBP': 0.79 },
+                'EUR': { 'TRY': 30, 'USD': 1.10, 'GBP': 0.87 },
+                'TRY': { 'USD': 0.037, 'EUR': 0.033, 'GBP': 0.028 },
+                'GBP': { 'USD': 1.27, 'EUR': 1.15, 'TRY': 35 },
+            };
+
+            if (fromCurrency === toCurrency) {
+                document.getElementById('result').innerText = 'Aynı para birimi seçildi.';
+                return;
+            }
+
+            const rate = exchangeRates[fromCurrency][toCurrency];
+            const result = amount * rate;
+
+            document.getElementById('result').innerText = `${amount} ${fromCurrency} = ${result.toFixed(2)} ${toCurrency}`;
+            
+            // Hesaplama geçmişine ekleme
+            history.push(`${amount} ${fromCurrency} = ${result.toFixed(2)} ${toCurrency}`);
+            updateHistory();
+        }
+
+        function updateHistory() {
+            const historyDiv = document.getElementById('history');
+            historyDiv.innerHTML = '<h3>Hesaplama Geçmişi</h3>';
+            history.forEach(item => {
+                const p = document.createElement('p');
+                p.innerText = item;
+                historyDiv.appendChild(p);
+            });
+        }
+    </script>
+</body>
+</html>

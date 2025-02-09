@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kolayca yüzde hesaplama, KDV hesaplama ve Vize Final hesaplama işlemleri yapabilirsiniz. Hızlı ve kullanıcı dostu araçlarla doğru sonuçlara ulaşın.">
+    <meta name="keywords" content="hesaplama aracı, yüzde hesaplama, KDV hesaplama, not hesaplama, yüzde oranı, KDV oranı,vize hesaplama,final hesaplama,ortalama hesaplama,vize final hesaplama,geçme notu hesaplama,vize,final,hesaplama,hesap,hesaplama araçları">
+    <title>KDV Hesaplama</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 1em;
+            color: #555;
+            margin-left: 10px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #4facfe;
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #00c3fe;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #888;
+        }
+
+        
+        #otherRate {
+            display: none;
+        }
+
+        #kdvRate:checked + #otherRate {
+            display: inline-block;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .result-item {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>KDV Hesaplama</h1>
+        
+        <h2>KDV İşlem Türü</h2>
+        <label for="kdvType">İşlem Türünü Seçin:</label>
+        <select id="kdvType">
+            <option value="dahilHaric">KDV Dahil Tutar ile KDV Hariç Fiyat</option>
+            <option value="haricDahil">KDV Hariç Fiyattan KDV Dahil Tutar</option>
+            <option value="matrah">KDV'den Matrah</option>
+        </select>
+
+        <h2>KDV Oranı</h2>
+        <label for="kdvRate">KDV Oranını Seçin:</label>
+        <select id="kdvRate">
+            <option value="1">%1</option>
+            <option value="8">%8</option>
+            <option value="18">%18</option>
+            <option value="20">%20</option>
+            <option value="other">Diğer</option>
+        </select>
+
+        <input type="number" id="otherRate" placeholder="KDV oranını girin" style="display: none;">
+
+        <label for="kdvAmount">Tutar:</label>
+        <input type="number" id="kdvAmount" placeholder="Tutarı girin">
+
+        <button onclick="calculateKDV()">KDV Hesapla</button>
+
+        <div class="result" id="kdvResult"></div>
+
+        <footer>
+            © 2024 KDV Hesaplama Aracı
+        </footer>
+    </div>
+
+    <script>
+        
+        function calculateKDV() {
+            const kdvAmount = parseFloat(document.getElementById('kdvAmount').value);
+            const kdvType = document.getElementById('kdvType').value;
+            const kdvRate = document.getElementById('kdvRate').value;
+
+            if (isNaN(kdvAmount) || !kdvType || !kdvRate) {
+                document.getElementById('kdvResult').innerText = 'Lütfen tüm alanları doldurun.';
+                return;
+            }
+
+            let rate = parseFloat(kdvRate);
+            if (kdvRate === 'other') {
+                rate = parseFloat(document.getElementById('otherRate').value);
+                if (isNaN(rate)) {
+                    document.getElementById('kdvResult').innerText = 'Lütfen geçerli bir KDV oranı girin.';
+                    return;
+                }
+            }
+
+            let result;
+            let kdv;
+            switch (kdvType) {
+                case 'dahilHaric':
+                    result = kdvAmount / (1 + rate / 100);
+                    kdv = kdvAmount - result;
+                    document.getElementById('kdvResult').innerHTML = `
+                        <div class="result-item">KDV Hariç Fiyat: ${result.toFixed(2)}</div>
+                        <div class="result-item">KDV (%${rate}): ${kdv.toFixed(2)}</div>
+                        <div class="result-item">KDV Dahil Fiyat: ${(result + kdv).toFixed(2)}</div>
+                    `;
+                    break;
+                case 'haricDahil':
+                    result = kdvAmount * (1 + rate / 100);
+                    kdv = result - kdvAmount;
+                    document.getElementById('kdvResult').innerHTML = `
+                        <div class="result-item">KDV Dahil Fiyat: ${result.toFixed(2)}</div>
+                        <div class="result-item">KDV (%${rate}): ${kdv.toFixed(2)}</div>
+                        <div class="result-item">KDV Hariç Fiyat: ${kdvAmount.toFixed(2)}</div>
+                    `;
+                    break;
+                case 'matrah':
+                    result = kdvAmount / (rate / 100);
+                    document.getElementById('kdvResult').innerHTML = `
+                        <div class="result-item">Matrah: ${result.toFixed(2)}</div>
+                    `;
+                    break;
+                default:
+                    document.getElementById('kdvResult').innerText = 'Geçersiz işlem türü.';
+            }
+        }
+
+        
+        document.getElementById('kdvRate').addEventListener('change', function() {
+            const otherRateInput = document.getElementById('otherRate');
+            if (this.value === 'other') {
+                otherRateInput.style.display = 'inline-block';
+            } else {
+                otherRateInput.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

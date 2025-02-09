@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kolayca yüzde hesaplama, KDV hesaplama ve Vize Final hesaplama işlemleri yapabilirsiniz. Hızlı ve kullanıcı dostu araçlarla doğru sonuçlara ulaşın.">
+    <meta name="keywords" content="hesaplama aracı, yüzde hesaplama, KDV hesaplama, not hesaplama, yüzde oranı, KDV oranı,vize hesaplama,final hesaplama,ortalama hesaplama,vize final hesaplama,geçme notu hesaplama,vize,final,hesaplama,hesap,hesaplama araçları">
+    <title>Vize Final Hesaplama</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 1em;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #4facfe;
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #00c3fe;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Vize Final Ortalama Hesaplama</h1>
+        <label for="vize">Vize Notu (%40):</label>
+        <input type="number" id="vize" placeholder="Vize notunu girin" min="0" max="100">
+
+        <label for="final">Final Notu (%60):</label>
+        <input type="number" id="final" placeholder="Final notunu girin" min="0" max="100">
+
+        <button onclick="hesapla()">Hesapla</button>
+
+        <div class="result" id="result"></div>
+
+        <footer>
+            © 2024 Vize Final Ortalama Hesaplama Aracı
+        </footer>
+    </div>
+
+    <script>
+        function hesapla() {
+            const vizeInput = document.getElementById('vize');
+            const finalInput = document.getElementById('final');
+
+            const vize = parseFloat(vizeInput.value);
+            const final = parseFloat(finalInput.value);
+
+            if (isNaN(vize) || isNaN(final)) {
+                document.getElementById('result').innerText = 'Lütfen geçerli bir not girin.';
+                return;
+            }
+
+            if (vize < 0 || vize > 100 || final < 0 || final > 100) {
+                document.getElementById('result').innerText = 'Notlar 0 ile 100 arasında olmalıdır.';
+                return;
+            }
+
+            const toplamNot = (vize * 0.4) + (final * 0.6);
+            
+
+            document.getElementById('result').innerText = `Ortalamanız: ${toplamNot.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>

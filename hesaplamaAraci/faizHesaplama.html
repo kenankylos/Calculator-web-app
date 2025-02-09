@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faiz Hesaplama</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+        .container {
+            background: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+        }
+        h1 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+        input, select, button {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #ff6f61;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+        }
+        button:hover {
+            background-color: #ff4b3a;
+        }
+        #result {
+            margin-top: 20px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Faiz Hesaplama</h1>
+        <select id="faizTuru">
+            <option value="basit">Basit Faiz</option>
+            <option value="bilesik">Bileşik Faiz</option>
+        </select>
+        <input type="number" id="anaPara" placeholder="Ana Parayı Girin">
+        <input type="number" id="faizOrani" placeholder="Faiz Oranını (%) Girin">
+        <input type="number" id="vade" placeholder="Vade Süresini (yıl) Girin">
+        <button onclick="faizHesapla()">Hesapla</button>
+        <div id="result"></div>
+    </div>
+    <script>
+        function faizHesapla() {
+            const faizTuru = document.getElementById('faizTuru').value;
+            const anaPara = parseFloat(document.getElementById('anaPara').value);
+            const faizOrani = parseFloat(document.getElementById('faizOrani').value) / 100;
+            const vade = parseFloat(document.getElementById('vade').value);
+
+            if (isNaN(anaPara) || isNaN(faizOrani) || isNaN(vade)) {
+                document.getElementById('result').innerText = 'Lütfen geçerli değerler girin.';
+                return;
+            }
+
+            let sonuc;
+            if (faizTuru === 'basit') {
+                sonuc = anaPara * faizOrani * vade;
+                document.getElementById('result').innerText = `Basit Faiz: ${sonuc.toFixed(2)} TL`;
+            } else if (faizTuru === 'bilesik') {
+                sonuc = anaPara * Math.pow((1 + faizOrani), vade) - anaPara;
+                document.getElementById('result').innerText = `Bileşik Faiz: ${sonuc.toFixed(2)} TL`;
+            }
+        }
+    </script>
+</body>
+</html>

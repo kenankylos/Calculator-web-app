@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hesaplama Aracı ile not hesaplama, yüzde hesaplama ve KDV hesaplama işlemlerini kolayca yapabilirsiniz.">
+    <meta name="keywords" content="hesaplama aracı, not hesaplama, yüzde hesaplama, KDV hesaplama, kolay hesaplama">
+    <meta name="author" content="Sizin İsminiz">
+    <meta name="robots" content="index, follow">
+    <title>Hesaplama Aracı | Not, Yüzde ve KDV Hesaplama</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100vh;
+            background-color: rgb(91, 56, 115);
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .switch-background {
+            background-color: rgb(91, 56, 115);
+            height: 200px;
+            width: 450px;
+            border-radius: 100px;
+            margin-top: 3em;
+            box-shadow: 5px 5px 35px rgb(56, 32, 72),
+                -5px -5px 35px rgba(212, 176, 235, 0.636);
+            transition: box-shadow 1s ease-in;
+        }
+
+        .off-shadow {
+            box-shadow: 5px 5px 35px rgb(56, 32, 72),
+                -5px -5px 35px rgba(212, 176, 235, 0.636);
+        }
+
+        .on-shadow {
+            box-shadow: 5px 5px 35px rgb(99, 17, 46),
+                -5px -5px 35px rgba(255, 217, 245, 0.468);
+        }
+
+        .innerSwitch {
+            background-color: #6ef0e1;
+            width: 200px;
+            height: 200px;
+            border-radius: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .face {
+            width: 120px;
+            padding-bottom: 20px;
+        }
+
+        .menu {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .menu button {
+            background: #4facfe;
+            border: none;
+            padding: 15px;
+            color: white;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .menu button:hover {
+            animation: buttonHover 0.5s ease-in-out;
+        }
+
+        @keyframes buttonHover {
+            0% {
+                transform: scale(1);
+                background-color: #4facfe;
+            }
+
+            50% {
+                transform: scale(1.05);
+                background-color: #00c3fe;
+            }
+
+            100% {
+                transform: scale(1);
+                background-color: #4facfe;
+            }
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .decoration {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            animation: rotate 10s linear infinite;
+        }
+
+        .decoration.one {
+            top: 10%;
+            left: 20%;
+        }
+
+        .decoration.two {
+            bottom: 15%;
+            right: 25%;
+        }
+
+        .decoration.three {
+            top: 50%;
+            left: 70%;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="decoration one"></div>
+    <div class="decoration two"></div>
+    <div class="decoration three"></div>
+
+    <div class="container">
+        <h1>Hesaplama Aracı</h1>
+        <div class="menu">
+            <button onclick="navigateTo('notHesaplama.html')">Not Hesaplama</button>
+            <button onclick="navigateTo('yuzdeHesaplama.html')">Yüzde Hesaplama</button>
+            <button onclick="navigateTo('kdvHesaplama.html')">KDV Hesaplama</button>
+            <button onclick="navigateTo('karZararHesaplama.html')">Kâr/Zarar Hesaplama</button>
+            <button onclick="navigateTo('faizHesaplama.html')">Faiz Hesaplama</button>
+            <button onclick="navigateTo('dovizCevirici.html')">Döviz Çevirici</button>
+        </div>
+
+        <!-- Switch Animation -->
+        <div class="switch-background off-shadow">
+            <div class="innerSwitch">
+                <svg width="285" height="150" viewBox="0 0 208 31" fill="none" xmlns="http://www.w3.org/2000/svg" class="face">
+                    <path class="mouth" d="M77 30H130V30.3375C130 30.7034 118.136 31 103.5 31C88.8645 31 77 30.7034 77 30.3375V30Z" fill="#E76060" />
+                    <path class="eye eye-left" d="M60 0.000190258C60 16.5687 46.5685 30.0002 30 30.0002C13.4315 30.0002 0 16.5687 0 0.000190258C0 0.000190258 13.4315 5.5 30 5.5C46.5685 5.5 60 0.000190258 60 0.000190258Z" fill="#474747" />
+                    <path class="eye eye-right" d="M208 0.999969C208 17.5685 194.569 31 178 31C161.431 31 148 17.5685 148 0.999969C148 0.999969 161.431 9.00001 178 9.00001C194.569 9.00001 208 0.999969 208 0.999969Z" fill="#474747" />
+                </svg>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>© 2024 Hesaplama Aracı. Tüm hakları saklıdır.</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
+    <script>
+        const eyeOpenL = "M60 30C60 46.5685 46.5685 60 30 60C13.4315 60 0 46.5685 0 30C0 13.4315 13.4315 0 30 0C46.5685 0 60 13.4315 60 30Z";
+        const eyeOpenR = "M208 31C208 47.5685 194.569 61 178 61C161.431 61 148 47.5685 148 31C148 14.4315 161.431 1 178 1C194.569 1 208 14.4315 208 31Z";
+        const eyeClosedL = "M60 0.000190258C60 16.5687 46.5685 30.0002 30 30.0002C13.4315 30.0002 0 16.5687 0 0.000190258C0 0.000190258 13.4315 5.5 30 5.5C46.5685 5.5 60 0.000190258 60 0.000190258Z";
+        const eyeClosedR = "M208 0.999969C208 17.5685 194.569 31 178 31C161.431 31 148 17.5685 148 0.999969C148 0.999969 161.431 9.00001 178 9.00001C194.569 9.00001 208 0.999969 208 0.999969Z";
+        const mouthOpen = "M77 60H130V73.5C130 88.1355 118.136 100 103.5 100C88.8645 100 77 88.1355 77 73.5V60Z";
+        const mouthClosed = "M77 30H130V30.3375C130 30.7034 118.136 31 103.5 31C88.8645 31 77 30.7034 77 30.3375V30Z";
+        const closedEyeLeft = document.querySelector(".eye-left");
+        const closedEyeRight = document.querySelector(".eye-right");
+        const closedMouth = document.querySelector(".mouth");
+        const face = document.querySelector(".innerSwitch");
+        const switchBG = document.querySelector(".switch-background");
+        const background = document.querySelector("body");
+        let switched = false;
+
+        face.addEventListener("click", () => {
+            var tl = anime.timeline({
+                easing: "easeOutExpo",
+                duration: 1050
+            });
+            tl.add(
+                {
+                    targets: [face],
+                    translateX: switched ? -1 : 250,
+                    rotate: switched ? -360 : 360,
+                    backgroundColor: switched ? "rgb(110,240,225)" : "rgb(243,255,148)"
+                },
+                500
+            ).add(
+                {
+                    targets: [switchBG, background],
+                    backgroundColor: switched ? "rgb(91,56,115)" : "rgb(255,117,165)"
+                },
+                500
+            ).add(
+                {
+                    targets: ".eye-left",
+                    d: [
+                        {
+                            value: switched ? eyeClosedL : eyeOpenL
+                        }
+                    ]
+                },
+                "-=1200"
+            ).add(
+                {
+                    targets: ".eye-right",
+                    d: [
+                        {
+                            value: switched ? eyeClosedR : eyeOpenR
+                        }
+                    ]
+                },
+                "-=1210"
+            ).add(
+                {
+                    targets: ".mouth",
+                    d: [
+                        {
+                            value: switched ? mouthClosed : mouthOpen
+                        }
+                    ]
+                },
+                "-=1210"
+            );
+
+            if (switched == true) {
+                if (switchBG.classList.contains("on-shadow")) {
+                    switchBG.classList.remove("on-shadow");
+                }
+                switchBG.classList.add("off-shadow");
+                switched = false;
+            } else {
+                if (switchBG.classList.contains("off-shadow")) {
+                    switchBG.classList.remove("off-shadow");
+                }
+                switchBG.classList.add("on-shadow");
+                switched = true;
+            }
+        });
+
+        function navigateTo(page) {
+            window.location.href = page;
+        }
+    </script>
+</body>
+</html>

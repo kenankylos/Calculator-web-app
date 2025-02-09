@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kolayca yüzde hesaplama, KDV hesaplama ve Vize Final hesaplama işlemleri yapabilirsiniz. Hızlı ve kullanıcı dostu araçlarla doğru sonuçlara ulaşın.">
+    <meta name="keywords" content="hesaplama aracı, yüzde hesaplama, KDV hesaplama, not hesaplama, yüzde oranı, KDV oranı,vize hesaplama,final hesaplama,ortalama hesaplama,vize final hesaplama,geçme notu hesaplama,vize,final,hesaplama,hesap,hesaplama araçları">
+    <title>Yüzde Hesaplama</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 1em;
+            color: #555;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        select {
+            font-size: 1em;
+            font-weight: bold;
+            background: #f9f9f9;
+            color: #333;
+        }
+
+        button {
+            background: #4facfe;
+            border: none;
+            padding: 10px 20px;
+            color: white;
+            font-size: 1em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #00c3fe;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        footer {
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Yüzde Hesaplama</h1>
+        
+        <h2>Yüzde Hesaplama Seçenekleri</h2>
+        <select id="calculationType">
+            <option value="percentageOf">x Sayısının %'si Kaçtır?</option>
+            <option value="percentageIs">x Sayısı, y Sayısının Yüzde Kaçı?</option>
+            <option value="percentageChange">x Sayısından y Sayısına Değişim Oranı Yüzde Kaçtır?</option>
+            <option value="increaseBy">x Sayısı %y Kadar Arttırılırsa Kaç Olur?</option>
+            <option value="decreaseBy">x Sayısı %y Kadar Azaltılırsa Kaç Olur?</option>
+        </select>
+
+        <label for="xValue">x Değeri:</label>
+        <input type="number" id="xValue" placeholder="x değerini girin">
+
+        <label for="yValue">y Değeri:</label>
+        <input type="number" id="yValue" placeholder="y değerini girin">
+
+        <button onclick="calculatePercentage()">Hesapla</button>
+
+        <div class="result" id="percentageResult"></div>
+
+        <footer>
+            © 2024 Yüzde Hesaplama Aracı
+        </footer>
+    </div>
+
+    <script>
+        function calculatePercentage() {
+            const xValue = parseFloat(document.getElementById('xValue').value);
+            const yValue = parseFloat(document.getElementById('yValue').value);
+            const calculationType = document.getElementById('calculationType').value;
+
+            if (isNaN(xValue) || isNaN(yValue)) {
+                document.getElementById('percentageResult').innerText = 'Lütfen geçerli değerler girin.';
+                return;
+            }
+
+            let result;
+            let explanation;
+
+            switch (calculationType) {
+                case 'percentageOf':
+                    result = (xValue * yValue) / 100;
+                    explanation = `${xValue} sayısının %${yValue}'si: ${result.toFixed(2)}`;
+                    break;
+                case 'percentageIs':
+                    result = (xValue / yValue) * 100;
+                    explanation = `${xValue} sayısı, ${yValue} sayısının %${result.toFixed(2)}'sidir.`;
+                    break;
+                case 'percentageChange':
+                    result = ((yValue - xValue) / xValue) * 100;
+                    explanation = `${xValue} sayısından ${yValue} sayısına değişim oranı: %${result.toFixed(2)}`;
+                    break;
+                case 'increaseBy':
+                    result = xValue + (xValue * yValue) / 100;
+                    explanation = `${xValue} sayısı %${yValue} kadar arttırılırsa: ${result.toFixed(2)}`;
+                    break;
+                case 'decreaseBy':
+                    result = xValue - (xValue * yValue) / 100;
+                    explanation = `${xValue} sayısı %${yValue} kadar azaltılırsa: ${result.toFixed(2)}`;
+                    break;
+                default:
+                    explanation = 'Geçersiz işlem türü.';
+            }
+
+            document.getElementById('percentageResult').innerText = explanation;
+        }
+    </script>
+</body>
+</html>
